@@ -1,6 +1,9 @@
 using FA22.P03.Web.Features.Products;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MvcMovieContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,7 +21,35 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+
+/*
+ * public class Product
+{
+    [Required]
+    public int Id { get; set; }
+    [Required]
+    public string Name { get; set; }
+    [Required]
+    public string Description { get; set; }
+    [Required]
+    public decimal Price { get; set;  }
+}
+
+public class ProductDb : DbContext
+{
+    public ProductDb(DbContextOptions options) : base(options)
+    {
+    }
+
+    //public DbSet<Product> Products { get; set; }
+    public DbSet<Product> Products => Set<Product>();
+}
+ */
+
+
 var currentId = 1;
+currentId = 1;
 var products = new List<ProductDto>
 {
     new ProductDto
@@ -123,6 +154,8 @@ app.MapDelete("/api/products/{id}", (int id) =>
     .Produces(400)
     .Produces(404)
     .Produces(200, typeof(ProductDto));
+
+
 
 
 app.Run();
