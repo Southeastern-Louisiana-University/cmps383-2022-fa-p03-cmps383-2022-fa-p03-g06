@@ -1,10 +1,10 @@
+using FA22.P03.Web.Data.Entity;
 using FA22.P03.Web.Dtos;
-using FA22.P03.Web.Features.Products;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<MvcMovieContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
+//builder.Services.AddDbContext<MvcMovieContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -45,39 +45,36 @@ public class ProductDb : DbContext
 
     //public DbSet<Product> Products { get; set; }
     public DbSet<Product> Products => Set<Product>();
-}
+}*/
  
 var currentId = 1;
-r products = new List<ProductDto>
+var products = new List<Product>
 {
-    new ProductDto
+    new Product
     {
         Id = currentId++,
         Name = "Super Mario World",
         Description = "Super Nintendo (SNES) System. Mint Condition",
-        Price = 259.99m,
     },
-    new ProductDto
+    new Product
     {
         Id = currentId++,
         Name = "Donkey Kong 64",
         Description = "Moderate Condition Donkey Kong 64 cartridge for the Nintendo 64",
-        Price = 199m,
     },
-    new ProductDto
+    new Product
     {
         Id = currentId++,
         Name = "Half-Life 2: Collector's Edition",
         Description = "Good condition with all 5 CDs, booklets, and material from original",
-        Price = 559.99m
     }
-};*/
+};
 
 app.MapGet("/api/products", () =>
     {
         return products;
     })
-    .Produces(200, typeof(ProductDto[]));
+    .Produces(200, typeof(Product[]));
 
 app.MapGet("/api/products/{id}", (int id) =>
     {
@@ -91,13 +88,12 @@ app.MapGet("/api/products/{id}", (int id) =>
     })
     .WithName("GetProductById")
     .Produces(404)
-    .Produces(200, typeof(ProductDto));
+    .Produces(200, typeof(Product));
 
-app.MapPost("/api/products", (ProductDto product) =>
+app.MapPost("/api/products", (Product product) =>
     {
         if (string.IsNullOrWhiteSpace(product.Name) ||
             product.Name.Length > 120 ||
-            product.Price <= 0 ||
             string.IsNullOrWhiteSpace(product.Description))
         {
             return Results.BadRequest();
@@ -108,13 +104,12 @@ app.MapPost("/api/products", (ProductDto product) =>
         return Results.CreatedAtRoute("GetProductById", new { id = product.Id }, product);
     })
     .Produces(400)
-    .Produces(201, typeof(ProductDto));
+    .Produces(201, typeof(Product));
 
-app.MapPut("/api/products/{id}", (int id, ProductDto product) =>
+app.MapPut("/api/products/{id}", (int id, Product product) =>
     {
         if (string.IsNullOrWhiteSpace(product.Name) ||
             product.Name.Length > 120 ||
-            product.Price <= 0 ||
             string.IsNullOrWhiteSpace(product.Description))
         {
             return Results.BadRequest();
@@ -128,7 +123,6 @@ app.MapPut("/api/products/{id}", (int id, ProductDto product) =>
 
         current.Name = product.Name;
         current.Name = product.Name;
-        current.Price = product.Price;
         current.Description = product.Description;
 
         return Results.Ok(current);
