@@ -10,7 +10,12 @@ namespace FA22.P03.Web.Dtos
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]
+
+        public DateTimeOffset StartUtc { get; set; }
+
+        public DateTimeOffset EndUtc { get; set; }
+
+    [Required]
         public decimal Price { get; set; }
     }
 }

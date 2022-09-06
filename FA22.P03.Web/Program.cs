@@ -1,3 +1,4 @@
+using FA22.P03.Web.Dtos;
 using FA22.P03.Web.Features.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,12 +46,9 @@ public class ProductDb : DbContext
     //public DbSet<Product> Products { get; set; }
     public DbSet<Product> Products => Set<Product>();
 }
- */
-
-
+ 
 var currentId = 1;
-currentId = 1;
-var products = new List<ProductDto>
+r products = new List<ProductDto>
 {
     new ProductDto
     {
@@ -73,7 +71,7 @@ var products = new List<ProductDto>
         Description = "Good condition with all 5 CDs, booklets, and material from original",
         Price = 559.99m
     }
-};
+};*/
 
 app.MapGet("/api/products", () =>
     {
