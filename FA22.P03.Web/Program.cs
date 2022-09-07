@@ -3,8 +3,8 @@ using FA22.P03.Web.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Services.AddDbContext<MvcMovieContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
+builder.Services.AddDbContext<ProductDb>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Server=(localdb)\\mssqllocaldb;Database=FA22-P03-G06;Trusted_Connection=True")));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,31 +21,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
-
-/*
- * public class Product
-{
-    [Required]
-    public int Id { get; set; }
-    [Required]
-    public string Name { get; set; }
-    [Required]
-    public string Description { get; set; }
-    [Required]
-    public decimal Price { get; set;  }
-}
-
-public class ProductDb : DbContext
-{
-    public ProductDb(DbContextOptions options) : base(options)
-    {
-    }
-
-    //public DbSet<Product> Products { get; set; }
-    public DbSet<Product> Products => Set<Product>();
-}*/
  
 var currentId = 1;
 var products = new List<Product>
@@ -152,6 +127,15 @@ app.MapDelete("/api/products/{id}", (int id) =>
 
 app.Run();
 
+public class ProductDb : DbContext
+{
+    public ProductDb(DbContextOptions options) : base(options)
+    {
+    }
+
+    //public DbSet<Product> Products { get; set; }
+    //public DbSet<Product> Products => Set<Product>();
+}
 //see: https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-6.0
 // Hi 383 - this is added so we can test our web project automatically. More on that later
 public partial class Program { }

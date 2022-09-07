@@ -14,6 +14,6 @@
 
         public DateTimeOffset EndUtc { get; set; }
 
-        public ICollection<ItemListing> ItemsForSale { get; set; }
+        public ICollection<ItemListing>? ItemsForSale { get; set; }
 }
 }

@@ -8,6 +8,6 @@
 
         public string? Description { get; set; }
 
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Item>? Items { get; set; }
 }
 }
